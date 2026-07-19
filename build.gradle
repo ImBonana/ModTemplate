@@ -38,12 +38,11 @@ subprojects {
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_25
-        targetCompatibility = JavaVersion.VERSION_25
+        sourceCompatibility = targetCompatibility = project.java_version as Integer
     }
 
     tasks.withType(JavaCompile).configureEach {
-        it.options.release = 25
+        it.options.release = project.java_version as Integer
     }
 
     loom {
@@ -85,6 +84,26 @@ subprojects {
 
     def loader = project.name;
     if (project.enabled_platforms.split(",").contains(loader)) {
+        processResources {
+            var projProperties = [
+                    mod_name: project.mod_name,
+                    mod_description: project.mod_description,
+                    version: project.version,
+                    mod_license: project.mod_license,
+                    mod_id: project.mod_id,
+                    modrinth_id: project.modrinth_id,
+                    java_version: project.java_version,
+                    mc_version_range: project.property(loader + "_game_version_range"),
+                    loader_version_range: project.property(loader + "_loader_version_range")
+            ]
+
+            inputs.properties projProperties
+
+            filesMatching(["META-INF/neoforge.mods.toml", "fabric.mod.json", "*.mixins.json", "architectury.common.json"]) {
+                expand projProperties
+            }
+        }
+
         modrinth {
             token = System.getenv("MODRINTH_TOKEN")
             projectId = project.modrinth_id

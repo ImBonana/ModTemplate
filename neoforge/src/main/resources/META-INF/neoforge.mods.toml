@@ -1,15 +1,15 @@
 modLoader = "javafml"
 loaderVersion = "[2,)"
 #issueTrackerURL = ""
-license = "MIT"
+license = "${mod_license}"
 
 [[mods]]
 modId = "${mod_id}"
 version = "${version}"
-displayName = "ModTemplate"
+displayName = "${mod_name}"
 authors = "ImBanana"
 description = '''
-Mod Template
+${mod_description}
 '''
 logoFile = "assets/${mod_id}/icon.png"
 modUrl = "https://modrinth.com/project/${modrinth_id}"

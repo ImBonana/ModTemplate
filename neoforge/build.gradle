@@ -28,21 +28,3 @@ sourceSets {
         }
     }
 }
-
-processResources {
-    inputs.property 'version', project.version
-    inputs.property 'mod_id', project.mod_id
-    inputs.property 'modrinth_id', project.modrinth_id
-    inputs.property 'mc_version_range', project.neoforge_game_version_range
-    inputs.property 'loader_version_range', project.neoforge_loader_version_range
-
-    filesMatching('META-INF/neoforge.mods.toml') {
-        expand (
-                version: project.version,
-                mod_id: project.mod_id,
-                modrinth_id: project.modrinth_id,
-                mc_version_range: project.neoforge_game_version_range,
-                loader_version_range: project.neoforge_loader_version_range
-        )
-    }
-}
